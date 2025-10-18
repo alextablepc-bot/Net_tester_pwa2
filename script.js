@@ -113,7 +113,7 @@ function renderSiteIcons(type, expanded = false) {
     div.innerHTML = `
       <div class="site-item-frame">
         <div class="status-box ${status}"></div>
-        <a href="${site.url}" target="_blank" class="site-name">${site.name}</a>
+        <a href="${site.url}" target="_blank" rel="noopener" class="site-name">${site.name}</a>
       </div>
     `;
     grid.appendChild(div);

@@ -1,5 +1,5 @@
 // sw.js
-const APP_VERSION = '2025-04-05'; // ← меняйте при обновлении
+const APP_VERSION = '2025-10-18'; // ← меняйте при обновлении
 const CACHE_NAME = 'net-scope-' + APP_VERSION;
 
 const CORE_ASSETS = [
