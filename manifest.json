@@ -2,12 +2,12 @@
   "name": "NetScope — Интернет-Линза",
   "short_name": "NetScope",
   "description": "Диагностика интернета: связь, цензура, API, радио.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4285f4",
   "orientation": "portrait",
-  "scope": "/",
+  "scope": "./",
   "icons": [
     {
       "src": "pwa-192x192.png",
