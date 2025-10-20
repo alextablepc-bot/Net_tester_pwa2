@@ -1,0 +1,10 @@
+[
+  { "name": "YouTube", "url": "https://youtube.com" },
+  { "name": "Facebook", "url": "https://facebook.com" },
+  { "name": "Instagram", "url": "https://instagram.com" },
+  { "name": "Discord", "url": "https://discord.com" },
+  { "name": "medium.com", "url": "https://medium.com/" },
+  { "name": "threema.ch", "url": "https://threema.ch" },
+  { "name": "Настоящее время", "url": "https://currenttime.tv" },
+  { "name": "Медуза", "url": "https://meduza.io" }
+]

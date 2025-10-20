@@ -1,0 +1,446 @@
+:root {
+  --bg: #f8f9fa;
+  --fg: #202124;
+  --card: white;
+  --border: #dadce0;
+  --text-muted: #5f6368;
+  --link: #1a73e8;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --status-gray: #e0e0e0;
+  --status-green: #34a853;
+  --status-red: #ea4335;
+  --status-yellow: #fbbc04;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --fg: #e8eaed;
+    --card: #1e1e1e;
+    --border: #3c4043;
+    --text-muted: #9aa0a6;
+    --link: #8ab4f8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  font-size: 16px;
+  font-weight: 500; /* Было 400 (normal), стало 500 — на ~15% жирнее */
+}
+
+/* Верхняя панель */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--card);
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+  border-bottom: 1px solid var(--border);
+}
+.diagnosis {
+  font-weight: 700; /* Заголовок — жирный */
+  margin-bottom: 6px;
+  font-size: 1.1em;
+}
+.top-info {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Основной контент */
+#content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 60px;
+}
+
+/* Вкладки */
+.tab {
+  display: none;
+  padding: 16px;
+}
+.tab.active {
+  display: block;
+}
+
+/* Кнопки */
+.primary-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  background: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 600;
+}
+.primary-btn:hover {
+  background: #3367d6;
+}
+
+/* Блоки сайтов */
+.site-group {
+  margin-bottom: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--card);
+}
+.group-header {
+  padding: 12px 16px;
+  font-weight: 600; /* Было bold (700), оставляем 600 для баланса */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1em;
+}
+.group-header:hover {
+  background: var(--border);
+}
+
+.icon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px 12px 12px;
+  transition: all 0.3s ease;
+}
+.icon-grid.expanded {
+  gap: 10px;
+}
+
+.site-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 30px;
+  transition: all 0.3s ease;
+}
+.icon-grid.expanded .site-item {
+  flex-direction: row;
+  min-width: 160px;
+  justify-content: space-between;
+}
+
+.site-item-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  transition: all 0.3s ease;
+  min-width: 30px;
+  width: fit-content;
+  gap: 4px;
+}
+.icon-grid.expanded .site-item-frame {
+  justify-content: space-between;
+  min-width: 160px;
+  width: auto;
+  padding: 6px 10px;
+}
+
+/* Иконки статуса */
+.icon-grid:not(.expanded) .site-item-frame .status-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.icon-grid.expanded .site-item-frame .status-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.site-item-frame .status-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--status-gray);
+  transition: background 0.2s;
+}
+.site-item-frame .status-box.green { background: var(--status-green); }
+.site-item-frame .status-box.red { background: var(--status-red); }
+.site-item-frame .status-box.yellow { background: var(--status-yellow); }
+
+.site-item-frame .site-name {
+  display: none;
+  font-size: 0.85em;
+  margin-top: 4px;
+  text-align: center;
+  width: 100%;
+  text-decoration: none;
+  color: var(--link);
+  font-weight: 500;
+}
+.site-item-frame .site-name:hover {
+  text-decoration: underline;
+}
+.icon-grid.expanded .site-item-frame .site-name {
+  display: block;
+  margin-top: 0;
+  text-align: left;
+}
+
+/* API */
+.api-item {
+  background: var(--card);
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.api-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 1em;
+}
+.api-url {
+  font-size: 0.8em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  word-break: break-all;
+  font-weight: 500;
+}
+.api-extra {
+  font-size: 0.9em;
+  color: var(--fg);
+  margin: 6px 0;
+  font-weight: 600;
+  min-height: 1.4em;
+}
+.api-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+.api-status {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.api-status.gray { background: var(--status-gray); }
+.api-status.green { background: var(--status-green); }
+.api-status.red { background: var(--status-red); }
+.api-status.yellow { background: var(--status-yellow); }
+.api-error {
+  color: var(--status-red);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+/* Радио */
+.radio-player {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.station {
+  background: var(--card);
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.station-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.station-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 1em;
+}
+.radio-toggle-btn {
+  width: auto;
+  padding: 6px 10px;
+  min-width: 36px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #4285f4;
+  color: white;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+.radio-toggle-btn:hover {
+  background: #3367d6;
+}
+.radio-toggle-btn.playing {
+  background: #ea4335;
+}
+#now-playing {
+  text-align: center;
+  margin-top: 16px;
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+/* Нижняя навигация */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  z-index: 1000;
+  height: 56px;
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-weight: 500;
+}
+.nav-item.active { color: var(--link); }
+.icon { display: block; margin-bottom: 2px; }
+.icon svg { width: 20px; height: 20px; fill: currentColor; }
+.label { font-size: 0.7em; }
+
+/* Общие утилиты */
+ul { padding-left: 20px; margin: 10px 0; }
+ul li { margin-bottom: 6px; font-weight: 500; }
+h2 { margin: 16px 0 12px; font-size: 1.3em; font-weight: 600; }
+p { margin-bottom: 12px; line-height: 1.5; font-weight: 500; }
+
+/* === МОБИЛЬНАЯ ОПТИМИЗАЦИЯ === */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .top-bar {
+    padding: 8px 12px;
+  }
+  .diagnosis {
+    font-size: 1em;
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+  .top-info {
+    font-size: 0.75em;
+    font-weight: 500;
+  }
+
+  .primary-btn {
+    padding: 10px;
+    font-size: 0.95em;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .group-header {
+    padding: 10px 12px;
+    font-size: 0.95em;
+    font-weight: 600;
+  }
+
+  /* Сильно уменьшенные иконки */
+  .icon-grid:not(.expanded) .site-item-frame .status-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  .site-item-frame {
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .icon-grid:not(.expanded) .site-item {
+    min-width: 30px;
+  }
+
+  .icon-grid.expanded .site-item-frame {
+    padding: 6px 10px;
+    min-width: 160px;
+  }
+
+  .site-item-frame .site-name {
+    font-size: 0.8em;
+    font-weight: 500;
+  }
+
+  .station-row {
+    gap: 8px;
+  }
+  .station-name {
+    font-size: 1em;
+    font-weight: 600;
+  }
+  .radio-toggle-btn {
+    padding: 6px 10px;
+    min-width: 36px;
+    font-size: 0.9em;
+    font-weight: 600;
+  }
+
+  .api-name {
+    font-size: 0.95em;
+    font-weight: 600;
+  }
+  .api-url {
+    font-size: 0.75em;
+    font-weight: 500;
+  }
+  .api-extra {
+    font-size: 0.9em;
+    font-weight: 600;
+  }
+
+  .bottom-nav {
+    height: 56px;
+  }
+  .nav-item {
+    padding: 4px 0;
+    font-weight: 500;
+  }
+  .label {
+    font-size: 0.7em;
+  }
+
+  #content {
+    padding-bottom: 60px;
+  }
+}

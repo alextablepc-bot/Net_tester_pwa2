@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>NetScope — Интернет-Линза</title>
+  <meta name="description" content="Диагностика интернета: связь, цензура, API, радио." />
+  
+  <!-- Иконки -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="pwa-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="pwa-512x512.png">
+  <link rel="apple-touch-icon" href="pwa-192x192.png">
+  
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#4285f4" />
+  <meta name="color-scheme" content="light dark">
+</head>
+<body>
+
+  <!-- Верхняя панель -->
+  <header class="top-bar">
+    <div class="diagnosis" id="diagnosis">🕗 Диагностика не запущена</div>
+    <div class="top-info">
+      <span id="location-info">—</span> • 
+      <span id="time-info">—</span> • 
+      <span id="ping-info">—</span>
+    </div>
+  </header>
+
+  <!-- Основной контент -->
+  <main id="content">
+    <!-- Вкладка 1: Сайты -->
+    <section id="tab-sites" class="tab active">
+      <button id="start-sites-btn" class="primary-btn">🔍 Проверить сайты</button>
+      <div id="sites-list"></div>
+    </section>
+
+    <!-- Вкладка 2: API -->
+    <section id="tab-api" class="tab">
+      <button id="start-api-btn" class="primary-btn">📡 Проверить API</button>
+      <div id="api-results"></div>
+    </section>
+
+    <!-- Вкладка 3: Радио -->
+    <section id="tab-radio" class="tab">
+      <div class="radio-player">
+        <audio id="radio-audio" preload="none"></audio>
+        <div class="radio-stations">
+          <div class="station" data-url="https://bfm.hostingradio.ru/bfm256.mp3?radiostatistica=bfmru">
+            <div class="station-row">
+              <span class="station-name">Бизнес FM</span>
+              <button class="radio-toggle-btn">▶</button>
+            </div>
+          </div>
+          <div class="station" data-url="https://icecast-vgtrk.cdnvideo.ru/mayakfm_mp3_128kbps">
+            <div class="station-row">
+              <span class="station-name">Радио Маяк</span>
+              <button class="radio-toggle-btn">▶</button>
+            </div>
+          </div>
+          <div class="station" data-url="https://kpradio.hostingradio.ru/kpradio.aac">
+            <div class="station-row">
+              <span class="station-name">Радио КП</span>
+              <button class="radio-toggle-btn">▶</button>
+            </div>
+          </div>
+        </div>
+        <div id="now-playing">Выберите станцию</div>
+      </div>
+    </section>
+
+    <!-- Вкладка 4: О приложении -->
+    <section id="tab-about" class="tab">
+      <h2>NetScope — Интернет-Линза</h2>
+      <p>Версия: 2.0</p>
+      <p>Полностью клиентское PWA-приложение для диагностики интернета.</p>
+      <p>Проверяет:</p>
+      <ul>
+        <li>Доступность социально значимых, популярных и заблокированных сайтов</li>
+        <li>Работу публичных API (IP, Geo, DNS, NTP и др.)</li>
+        <li>Поддержку глобального интернета</li>
+      </ul>
+      <p>© 2025. Открытый исходный код.</p>
+    </section>
+  </main>
+
+  <!-- Нижняя навигация -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-tab="sites">
+      <span class="icon" id="icon-sites"></span>
+      <span class="label">Сайты</span>
+    </button>
+    <button class="nav-item" data-tab="api">
+      <span class="icon" id="icon-api"></span>
+      <span class="label">API</span>
+    </button>
+    <button class="nav-item" data-tab="radio">
+      <span class="icon" id="icon-radio"></span>
+      <span class="label">Радио</span>
+    </button>
+    <button class="nav-item" data-tab="about">
+      <span class="icon" id="icon-info"></span>
+      <span class="label">О</span>
+    </button>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
