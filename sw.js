@@ -1,5 +1,5 @@
 // sw.js
-const APP_VERSION = '2025-10-20.1'; // Обнови при изменениях в статике
+const APP_VERSION = '2025-10-20.5'; // ← меняйте при обновлении
 const CACHE_NAME = 'net-scope-' + APP_VERSION;
 
 const CORE_ASSETS = [
@@ -7,6 +7,9 @@ const CORE_ASSETS = [
   './index.html',
   './style.css',
   './script.js',
+  './sites-critical.json',
+  './sites-popular.json',
+  './sites-rkn-blocked.json',
   './manifest.json',
   './favicon.ico',
   './pwa-192x192.png',
@@ -17,8 +20,8 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(CORE_ASSETS).catch(err => {
-        console.warn('Partial cache failure (core assets only):', err);
-        return cache.addAll(['./']); // кэшируем хотя бы index.html
+        console.warn('Partial cache failure:', err);
+        return cache.addAll(['./']); // хотя бы index.html
       }).then(() => self.skipWaiting());
     })
   );
@@ -30,7 +33,6 @@ self.addEventListener('activate', event => {
       return Promise.all(
         keys.map(key => {
           if (key !== CACHE_NAME && key.startsWith('net-scope-')) {
-            console.log('Deleting old cache:', key);
             return caches.delete(key);
           }
         })
@@ -55,12 +57,10 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(cached => {
       return cached || fetch(event.request).catch(() => {
-        // Для JSON-файлов возвращаем пустой массив, если нет сети
-        if (event.request.url.includes('.json')) {
+        if (event.request.url.endsWith('.json')) {
           return new Response('[]', { headers: { 'Content-Type': 'application/json' } });
         }
-        // Для остальных — кэшированный ресурс (если есть), иначе ошибка
-        return caches.match(event.request);
+        return caches.match('./');
       });
     })
   );
